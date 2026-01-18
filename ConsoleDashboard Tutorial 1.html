@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C# Tutorial Guide</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    /* Prevent text selection and copying */
+    .no-copy {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+    }
+    
+    /* Code blocks with visual protection */
+    .code-block {
+      font-family: 'JetBrains Mono', monospace;
+      background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+      border-left: 4px solid #00d4ff;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .code-block::before {
+      content: "📋 Type this code - copying disabled";
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: linear-gradient(90deg, transparent, #0f0f23 30%);
+      padding: 4px 12px;
+      font-size: 10px;
+      color: #6b7280;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    
+    .code-line {
+      display: block;
+      padding: 2px 0;
+      pointer-events: none;
+    }
+    
+    .comment { color: #8ab973; }
+    .keyword { color: #6ba4eb; }
+    .string { color: #e5a574; }
+    .type { color: #5ed9c7; }
+    .method { color: #e8df8c; }
+    .number { color: #c9dba5; }
+    
+    /* Make all text in code blocks light colored */
+    .code-block {
+      color: #e2e8f0;
+    }
+    
+    .step-card {
+      background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+      border: 1px solid #e2e8f0;
+      transition: all 0.3s ease;
+    }
+    
+    .step-card:hover {
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      transform: translateY(-2px);
+    }
+    
+    .step-number {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      font-weight: 700;
+      min-width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    
+    .explanation-box {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border-left: 4px solid #f59e0b;
+    }
+    
+    .header-gradient {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    }
+    
+    /* Disable right-click context menu styling */
+    .protected-content {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .animate-in {
+      animation: fadeInUp 0.5s ease forwards;
+    }
+    
+    .step-card:nth-child(1) { animation-delay: 0.1s; }
+    .step-card:nth-child(2) { animation-delay: 0.15s; }
+    .step-card:nth-child(3) { animation-delay: 0.2s; }
+    .step-card:nth-child(4) { animation-delay: 0.25s; }
+    .step-card:nth-child(5) { animation-delay: 0.3s; }
+    .step-card:nth-child(6) { animation-delay: 0.35s; }
+    .step-card:nth-child(7) { animation-delay: 0.4s; }
+    .step-card:nth-child(8) { animation-delay: 0.45s; }
+    .step-card:nth-child(9) { animation-delay: 0.5s; }
+    .step-card:nth-child(10) { animation-delay: 0.55s; }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-slate-50 no-copy protected-content" oncontextmenu="return false;" ondragstart="return false;">
+  <div class="h-full w-full overflow-auto"><!-- Header -->
+   <header class="header-gradient text-white py-8 px-6 shadow-lg">
+    <div class="max-w-4xl mx-auto">
+     <div class="flex items-center gap-3 mb-2"><span class="text-3xl">💻</span> <span class="text-sm font-medium bg-white/20 px-3 py-1 rounded-full">Tutorial 1</span>
+     </div>
+     <h1 id="main-title" class="text-3xl md:text-4xl font-bold mb-3" style="font-family: 'Space Grotesk', sans-serif;">Create Your First Console Dashboard</h1>
+     <p class="text-white/90 text-lg max-w-2xl">Learn to create a welcome screen, handle user input, and display personalized greetings in C#.</p>
+    </div>
+   </header><!-- Goal Section -->
+   <div class="max-w-4xl mx-auto px-6 py-6">
+    <div class="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 rounded-2xl p-6 mb-8">
+     <div class="flex items-start gap-4"><span class="text-2xl">🎯</span>
+      <div>
+       <h2 class="font-bold text-emerald-800 text-lg mb-2" style="font-family: 'Space Grotesk', sans-serif;">Learning Goal</h2>
+       <p class="text-emerald-700">Create a simple welcome screen, ask for the user's name, and display a personalized greeting. This sets the foundation for <strong>variables</strong>, <strong>input/output</strong>, and <strong>program structure</strong>.</p>
+      </div>
+     </div>
+    </div><!-- Steps Container -->
+    <div class="space-y-6"><!-- Step 0 -->
+     <div class="step-card rounded-2xl p-6 animate-in opacity-0">
+      <div class="flex items-start gap-4 mb-4">
+       <div class="step-number">
+        0
+       </div>
+       <div>
+        <h3 class="font-bold text-xl text-slate-800" style="font-family: 'Space Grotesk', sans-serif;">Open Visual Studio</h3>
+        <p class="text-slate-500 text-sm">Setting up your project</p>
+       </div>
+      </div>
+      <ol class="list-decimal list-inside space-y-2 text-slate-700 ml-14">
+       <li>Launch <strong>Visual Studio</strong></li>
+       <li>Click <strong>"Create a new project"</strong></li>
+       <li>Select <strong>Console App → C# → Next</strong></li>
+       <li>Name your project <code class="bg-slate-100 px-2 py-1 rounded text-purple-700 font-mono text-sm">ConsoleDashboardApp</code></li>
+       <li>Select <strong>.NET 7.0</strong> (or the latest available) → <strong>Create</strong></li>
+      </ol>
+      <div class="mt-4 ml-14 text-sm text-slate-500 italic">
+       ✓ You should now see a Program.cs file open with some starter code.
+      </div>
+     </div><!-- Step 1 -->
+     <div class="step-card rounded-2xl p-6 animate-in opacity-0">
+      <div class="flex items-start gap-4 mb-4">
+       <div class="step-number">
+        1
+       </div>
+       <div>
+        <h3 class="font-bold text-xl text-slate-800" style="font-family: 'Space Grotesk', sans-serif;">Start with using statements</h3>
+        <p class="text-slate-500 text-sm">Import required namespaces</p>
+       </div>
+      </div>
+      <p class="text-slate-600 mb-4 ml-14">At the very top of your file, type:</p>
+      <div class="code-block rounded-xl p-5 ml-14 text-sm leading-relaxed"><span class="code-line"><span class="keyword">using</span> <span class="type">System</span>; <span class="comment">// Gives access to Console.WriteLine and Console.ReadLine</span></span> <span class="code-line"><span class="keyword">using</span> <span class="type">System.Threading</span>; <span class="comment">// Allows Thread.Sleep (pauses the program)</span></span>
+      </div>
+      <div class="explanation-box rounded-xl p-4 mt-4 ml-14">
+       <p class="font-semibold text-amber-800 mb-2">💡 Explanation:</p>
+       <ul class="text-amber-900 text-sm space-y-1">
+        <li>• <code class="font-mono bg-amber-200/50 px-1 rounded">using System;</code> lets your program talk to the computer's console.</li>
+        <li>• <code class="font-mono bg-amber-200/50 px-1 rounded">using System.Threading;</code> lets you pause your program for effects like loading dots.</li>
+       </ul>
+      </div>
+     </div><!-- Step 2 -->
+     <div class="step-card rounded-2xl p-6 animate-in opacity-0">
+      <div class="flex items-start gap-4 mb-4">
+       <div class="step-number">
+        2
+       </div>
+       <div>
+        <h3 class="font-bold text-xl text-slate-800" style="font-family: 'Space Grotesk', sans-serif;">Create the Program class</h3>
+        <p class="text-slate-500 text-sm">Define the main structure</p>
+       </div>
+      </div>
+      <p class="text-slate-600 mb-4 ml-14">Every C# program needs a class to hold the code. Under your using statements:</p>
+      <div class="code-block rounded-xl p-5 ml-14 text-sm leading-relaxed"><span class="code-line"><span class="keyword">class</span> <span class="type">Program</span></span> <span class="code-line">{</span> <span class="code-line"> <span class="keyword">static void</span> <span class="method">Main</span>()</span> <span class="code-line"> {</span> <span class="code-line"> <span class="comment">// Your program will go here</span></span> <span class="code-line"> }</span> <span class="code-line">}</span>
+      </div>
+      <div class="explanation-box rounded-xl p-4 mt-4 ml-14">
+       <p class="font-semibold text-amber-800 mb-2">💡 Explanation:</p>
+       <ul class="text-amber-900 text-sm space-y-1">
+        <li>• <code class="font-mono bg-amber-200/50 px-1 rounded">class Program</code> = container for all your code.</li>
+        <li>• <code class="font-mono bg-amber-200/50 px-1 rounded">static void Main()</code> = entry point; the computer always starts here.</li>
+       </ul>
+      </div>
+     </div><!-- Step 3 -->
+     <div class="step-card rounded-2xl p-6 animate-in opacity-0">
+      <div class="flex items-start gap-4 mb-4">
+       <div class="step-number">
+        3
+       </div>
+       <div>
+        <h3 class="font-bold text-xl text-slate-800" style="font-family: 'Space Grotesk', sans-serif;">Declare your variables</h3>
+        <p class="text-slate-500 text-sm">Set up storage for data</p>
+       </div>
+      </div>
+      <p class="text-slate-600 mb-4 ml-14">Inside <code class="font-mono bg-slate-100 px-1 rounded">Main()</code>, at the very top, type:</p>
+      <div class="code-block rounded-xl p-5 ml-14 text-sm leading-relaxed"><span class="code-line"><span class="keyword">string</span> userName; <span class="comment">// store the user's name</span></span> <span class="code-line"><span class="keyword">int</span> mainChoice; <span class="comment">// store menu choices (for future tutorials)</span></span> <span class="code-line"><span class="keyword">int</span> subChoice; <span class="comment">// store sub-menu choices (for future tutorials)</span></span>
+      </div>
+      <div class="explanation-box rounded-xl p-4 mt-4 ml-14">
+       <p class="font-semibold text-amber-800 mb-2">💡 Why at the top?</p>
+       <ul class="text-amber-900 text-sm space-y-1">
+        <li>• Makes your code easier to read.</li>
+        <li>• You know all the variables your program will use.</li>
+        <li>• Avoids errors if you accidentally declare the same variable twice later.</li>
+       </ul>
+      </div>
+     </div><!-- Step 4 -->
+     <div class="step-card rounded-2xl p-6 animate-in opacity-0">
+      <div class="flex items-start gap-4 mb-4">
+       <div class="step-number">
+        4
+       </div>
+       <div>
+        <h3 class="font-bold text-xl text-slate-800" style="font-family: 'Space Grotesk', sans-serif;">Display a welcome banner</h3>
+        <p class="text-slate-500 text-sm">Create visual appeal</p>
+       </div>
+      </div>
+      <p class="text-slate-600 mb-4 ml-14">Type this next:</p>
+      <div class="code-block rounded-xl p-5 ml-14 text-sm leading-relaxed"><span class="code-line"><span class="type">Console</span>.<span class="method">ForegroundColor</span> = <span class="type">ConsoleColor</span>.Cyan;</span> <span class="code-line"><span class="type">Console</span>.<span class="method">WriteLine</span>(<span class="string">"****************************************************"</span>);</span> <span class="code-line"><span class="type">Console</span>.<span class="method">WriteLine</span>(<span class="string">"* *"</span>);</span> <span class="code-line"><span class="type">Console</span>.<span class="method">WriteLine</span>(<span class="string">"* Welcome to the Console Dashboard *"</span>);</span> <span class="code-line"><span class="type">Console</span>.<span class="method">WriteLine</span>(<span class="string">"* *"</span>);</span> <span class="code-line"><span class="type">Console</span>.<span class="method">WriteLine</span>(<span class="string">"****************************************************"</span>);</span> <span class="code-line"><span class="type">Console</span>.<span class="method">ResetColor</span>();</span> <span class="code-line"><span class="type">Console</span>.<span class="method">WriteLine</span>();</span>
+      </div>
+      <div class="explanation-box rounded-xl p-4 mt-4 ml-14">
+       <p class="font-semibold text-amber-800 mb-2">💡 Explanation:</p>
+       <ul class="text-amber-900 text-sm space-y-1">
+        <li>• <code class="font-mono bg-amber-200/50 px-1 rounded">Console.ForegroundColor</code> = changes text color.</li>
+        <li>• <code class="font-mono bg-amber-200/50 px-1 rounded">Console.WriteLine</code> = prints text.</li>
+        <li>• <code class="font-mono bg-amber-200/50 px-1 rounded">Console.ResetColor()</code> = returns to default text color.</li>
+        <li>• 🎨 Students can experiment with different colors if they want!</li>
+       </ul>
+      </div>
+     </div><!-- Step 5 -->
+     <div class="step-card rounded-2xl p-6 animate-in opacity-0">
+      <div class="flex items-start gap-4 mb-4">
+       <div class="step-number">
+        5
+       </div>
+       <div>
+        <h3 class="font-bold text-xl text-slate-800" style="font-family: 'Space Grotesk', sans-serif;">Ask the user for their name</h3>
+        <p class="text-slate-500 text-sm">Get user input</p>
+       </div>
+      </div>
+      <div class="code-block rounded-xl p-5 ml-14 text-sm leading-relaxed"><span class="code-line"><span class="type">Console</span>.<span class="method">ForegroundColor</span> = <span class="type">ConsoleColor</span>.DarkGreen;</span> <span class="code-line"><span class="type">Console</span>.<span class="method">WriteLine</span>(<span class="string">"Please enter your name:"</span>);</span> <span class="code-line"><span class="type">Console</span>.<span class="method">ForegroundColor</span> = <span class="type">ConsoleColor</span>.White;</span> <span class="code-line"></span> <span class="code-line">userName = <span class="type">Console</span>.<span class="method">ReadLine</span>(); <span class="comment">// waits for input and stores it in userName</span></span> <span class="code-line"><span class="type">Console</span>.<span class="method">ResetColor</span>();</span>
+      </div>
+      <div class="explanation-box rounded-xl p-4 mt-4 ml-14">
+       <p class="font-semibold text-amber-800 mb-2">💡 Explanation:</p>
+       <ul class="text-amber-900 text-sm space-y-1">
+        <li>• <code class="font-mono bg-amber-200/50 px-1 rounded">Console.ReadLine()</code> pauses the program until the user types something.</li>
+        <li>• Whatever they type is stored in <code class="font-mono bg-amber-200/50 px-1 rounded">userName</code> for later.</li>
+       </ul>
+      </div>
+     </div><!-- Step 6 -->
+     <div class="step-card rounded-2xl p-6 animate-in opacity-0">
+      <div class="flex items-start gap-4 mb-4">
+       <div class="step-number">
+        6
+       </div>
+       <div>
+        <h3 class="font-bold text-xl text-slate-800" style="font-family: 'Space Grotesk', sans-serif;">Create a loading effect</h3>
+        <p class="text-slate-500 text-sm">Add visual feedback</p>
+       </div>
+      </div>
+      <div class="code-block rounded-xl p-5 ml-14 text-sm leading-relaxed"><span class="code-line"><span class="type">Console</span>.<span class="method">Clear</span>(); <span class="comment">// clears the console</span></span> <span class="code-line"></span> <span class="code-line"><span class="type">Console</span>.<span class="method">ForegroundColor</span> = <span class="type">ConsoleColor</span>.Red;</span> <span class="code-line"><span class="type">Console</span>.<span class="method">WriteLine</span>(<span class="string">"Loading the Dashboard"</span>);</span> <span class="code-line"></span> <span class="code-line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++)</span> <span class="code-line">{</span> <span class="code-line"> <span class="type">Console</span>.<span class="method">Write</span>(<span class="string">"."</span>); <span class="comment">// print a dot</span></span> <span class="code-line"> <span class="type">Thread</span>.<span class="method">Sleep</span>(<span class="number">100</span>); <span class="comment">// pause 100ms between dots</span></span> <span class="code-line">}</span>
+      </div>
+      <div class="explanation-box rounded-xl p-4 mt-4 ml-14">
+       <p class="font-semibold text-amber-800 mb-2">💡 Explanation:</p>
+       <ul class="text-amber-900 text-sm space-y-1">
+        <li>• Makes the program feel interactive.</li>
+        <li>• <code class="font-mono bg-amber-200/50 px-1 rounded">Thread.Sleep(100)</code> pauses for a short moment.</li>
+        <li>• <code class="font-mono bg-amber-200/50 px-1 rounded">Console.Clear()</code> removes previous text for a clean screen.</li>
+       </ul>
+      </div>
+     </div><!-- Step 7 -->
+     <div class="step-card rounded-2xl p-6 animate-in opacity-0">
+      <div class="flex items-start gap-4 mb-4">
+       <div class="step-number">
+        7
+       </div>
+       <div>
+        <h3 class="font-bold text-xl text-slate-800" style="font-family: 'Space Grotesk', sans-serif;">Display "Access Granted" and welcome the user</h3>
+        <p class="text-slate-500 text-sm">Final personalized output</p>
+       </div>
+      </div>
+      <div class="code-block rounded-xl p-5 ml-14 text-sm leading-relaxed"><span class="code-line"><span class="type">Thread</span>.<span class="method">Sleep</span>(<span class="number">500</span>);</span> <span class="code-line"><span class="type">Console</span>.<span class="method">Clear</span>();</span> <span class="code-line"></span> <span class="code-line"><span class="type">Console</span>.<span class="method">ForegroundColor</span> = <span class="type">ConsoleColor</span>.DarkYellow;</span> <span class="code-line"><span class="type">Console</span>.<span class="method">WriteLine</span>(<span class="string">"************************"</span>);</span> <span class="code-line"><span class="type">Console</span>.<span class="method">WriteLine</span>(<span class="string">"* ACCESS GRANTED *"</span>);</span> <span class="code-line"><span class="type">Console</span>.<span class="method">WriteLine</span>(<span class="string">"************************"</span>);</span> <span class="code-line"><span class="type">Thread</span>.<span class="method">Sleep</span>(<span class="number">500</span>);</span> <span class="code-line"></span> <span class="code-line"><span class="type">Console</span>.<span class="method">WriteLine</span>(<span class="string">$"\nWelcome to the dashboard, </span>{userName}<span class="string">!"</span>);</span> <span class="code-line"><span class="type">Console</span>.<span class="method">ResetColor</span>();</span>
+      </div>
+      <div class="explanation-box rounded-xl p-4 mt-4 ml-14">
+       <p class="font-semibold text-amber-800 mb-2">💡 Explanation:</p>
+       <ul class="text-amber-900 text-sm space-y-1">
+        <li>• <code class="font-mono bg-amber-200/50 px-1 rounded">$"\nWelcome to the dashboard, {userName}!"</code> → <code class="font-mono bg-amber-200/50 px-1 rounded">$</code> allows variables inside text.</li>
+        <li>• Gives a personalized greeting to the user!</li>
+       </ul>
+      </div>
+     </div><!-- Step 8 -->
+     <div class="step-card rounded-2xl p-6 animate-in opacity-0">
+      <div class="flex items-start gap-4 mb-4">
+       <div class="step-number">
+        8
+       </div>
+       <div>
+        <h3 class="font-bold text-xl text-slate-800" style="font-family: 'Space Grotesk', sans-serif;">Pause before moving on</h3>
+        <p class="text-slate-500 text-sm">Wait for user input</p>
+       </div>
+      </div>
+      <div class="code-block rounded-xl p-5 ml-14 text-sm leading-relaxed"><span class="code-line"><span class="type">Console</span>.<span class="method">WriteLine</span>(<span class="string">"\nPress Enter to continue..."</span>);</span> <span class="code-line"><span class="type">Console</span>.<span class="method">ReadLine</span>();</span> <span class="code-line"><span class="type">Console</span>.<span class="method">Clear</span>();</span>
+      </div>
+      <div class="explanation-box rounded-xl p-4 mt-4 ml-14">
+       <p class="font-semibold text-amber-800 mb-2">💡 Explanation:</p>
+       <ul class="text-amber-900 text-sm space-y-1">
+        <li>• Let the user see the final message before the screen clears.</li>
+       </ul>
+      </div>
+     </div><!-- Step 9 -->
+     <div class="step-card rounded-2xl p-6 animate-in opacity-0">
+      <div class="flex items-start gap-4 mb-4">
+       <div class="step-number">
+        9
+       </div>
+       <div>
+        <h3 class="font-bold text-xl text-slate-800" style="font-family: 'Space Grotesk', sans-serif;">End of tutorial message</h3>
+        <p class="text-slate-500 text-sm">Preview what's next</p>
+       </div>
+      </div>
+      <div class="code-block rounded-xl p-5 ml-14 text-sm leading-relaxed"><span class="code-line"><span class="type">Console</span>.<span class="method">WriteLine</span>(<span class="string">"Next tutorial will introduce your first menu!"</span>);</span>
+      </div>
+      <div class="explanation-box rounded-xl p-4 mt-4 ml-14">
+       <p class="font-semibold text-amber-800 mb-2">💡 Explanation:</p>
+       <ul class="text-amber-900 text-sm space-y-1">
+        <li>• Lets students know what's coming in the next tutorial!</li>
+       </ul>
+      </div>
+     </div><!-- Success Section -->
+     <div class="bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl p-8 text-white text-center mt-8 mb-8"><span class="text-4xl mb-4 block">🎉</span>
+      <h2 class="text-2xl font-bold mb-2" style="font-family: 'Space Grotesk', sans-serif;">Tutorial Complete!</h2>
+      <p class="text-emerald-100">Run your program and see your personalized console dashboard in action.</p>
+     </div>
+    </div>
+   </div><!-- Footer -->
+   <footer class="bg-slate-800 text-slate-400 py-6 px-6 text-center text-sm">
+    <p>📝 Remember: Type the code yourself to build muscle memory and truly learn!</p>
+   </footer>
+  </div>
+  <script>
+    const defaultConfig = {
+      tutorial_title: "Create Your First Console Dashboard",
+      primary_color: "#667eea",
+      secondary_color: "#f8fafc",
+      text_color: "#334155",
+      accent_color: "#f59e0b",
+      button_color: "#10b981"
+    };
+
+    async function onConfigChange(config) {
+      const title = config.tutorial_title || defaultConfig.tutorial_title;
+      document.getElementById('main-title').textContent = title;
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.primary_color || defaultConfig.primary_color,
+            set: (value) => {
+              config.primary_color = value;
+              window.elementSdk.setConfig({ primary_color: value });
+            }
+          },
+          {
+            get: () => config.secondary_color || defaultConfig.secondary_color,
+            set: (value) => {
+              config.secondary_color = value;
+              window.elementSdk.setConfig({ secondary_color: value });
+            }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => {
+              config.text_color = value;
+              window.elementSdk.setConfig({ text_color: value });
+            }
+          },
+          {
+            get: () => config.accent_color || defaultConfig.accent_color,
+            set: (value) => {
+              config.accent_color = value;
+              window.elementSdk.setConfig({ accent_color: value });
+            }
+          },
+          {
+            get: () => config.button_color || defaultConfig.button_color,
+            set: (value) => {
+              config.button_color = value;
+              window.elementSdk.setConfig({ button_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["tutorial_title", config.tutorial_title || defaultConfig.tutorial_title]
+      ]);
+    }
+
+    // Disable keyboard shortcuts for copying
+    document.addEventListener('keydown', function(e) {
+      if (e.ctrlKey && (e.key === 'c' || e.key === 'C' || e.key === 'x' || e.key === 'X' || e.key === 'a' || e.key === 'A')) {
+        e.preventDefault();
+        return false;
+      }
+      if (e.metaKey && (e.key === 'c' || e.key === 'C' || e.key === 'x' || e.key === 'X' || e.key === 'a' || e.key === 'A')) {
+        e.preventDefault();
+        return false;
+      }
+    });
+
+    // Disable copy event
+    document.addEventListener('copy', function(e) {
+      e.preventDefault();
+      return false;
+    });
+
+    // Initialize SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bfcceed0097ec77',t:'MTc2ODcyNTg0NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
