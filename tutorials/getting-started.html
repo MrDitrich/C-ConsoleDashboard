@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting Started - C# Console Dashboard</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Getting Started</h1>
+            <p class="subtitle">C# Console Dashboard Tutorial</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section>
+            <a href="../index.html" class="back-link">← Back to Tutorials</a>
+            
+            <div class="tutorial-content">
+                <h2>Introduction</h2>
+                <p>Welcome to the Getting Started tutorial for C# Console Dashboard development. In this tutorial, you'll learn how to set up your development environment and create your first console dashboard application.</p>
+
+                <h3>Prerequisites</h3>
+                <ul>
+                    <li>.NET SDK 6.0 or higher</li>
+                    <li>Visual Studio 2022 or Visual Studio Code</li>
+                    <li>Basic knowledge of C# programming</li>
+                </ul>
+
+                <h3>Step 1: Install .NET SDK</h3>
+                <p>First, ensure you have the .NET SDK installed on your machine. You can download it from the official Microsoft website.</p>
+                <pre><code>dotnet --version</code></pre>
+
+                <h3>Step 2: Create a New Console Application</h3>
+                <p>Open your terminal or command prompt and run the following command to create a new console application:</p>
+                <pre><code>dotnet new console -n ConsoleDashboard
+cd ConsoleDashboard</code></pre>
+
+                <h3>Step 3: Your First Dashboard</h3>
+                <p>Open the <code>Program.cs</code> file and replace its contents with the following code:</p>
+                <pre><code>using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.Clear();
+        Console.WriteLine("╔════════════════════════════════╗");
+        Console.WriteLine("║  C# Console Dashboard v1.0     ║");
+        Console.WriteLine("╠════════════════════════════════╣");
+        Console.WriteLine("║  Welcome to your dashboard!    ║");
+        Console.WriteLine("╚════════════════════════════════╝");
+        Console.WriteLine();
+        Console.WriteLine("Press any key to exit...");
+        Console.ReadKey();
+    }
+}</code></pre>
+
+                <h3>Step 4: Run Your Application</h3>
+                <p>Execute your console dashboard by running:</p>
+                <pre><code>dotnet run</code></pre>
+
+                <h3>What's Next?</h3>
+                <p>Congratulations! You've created your first console dashboard. In the next tutorial, you'll learn about adding interactive components and menu systems.</p>
+
+                <div style="margin-top: 2rem;">
+                    <a href="basic-components.html" class="btn">Next: Basic Components →</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 C# Console Dashboard Tutorial Series</p>
+        </div>
+    </footer>
+</body>
+</html>

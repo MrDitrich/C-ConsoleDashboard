@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Components - C# Console Dashboard</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Basic Components</h1>
+            <p class="subtitle">C# Console Dashboard Tutorial</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section>
+            <a href="../index.html" class="back-link">← Back to Tutorials</a>
+            
+            <div class="tutorial-content">
+                <h2>Building Basic Dashboard Components</h2>
+                <p>In this tutorial, you'll learn how to create reusable components for your console dashboard, including menus, tables, and progress bars.</p>
+
+                <h3>Creating a Menu System</h3>
+                <p>A menu system is essential for navigation in console applications. Here's a simple implementation:</p>
+                <pre><code>public class Menu
+{
+    private List&lt;string&gt; options;
+    private int selectedIndex;
+
+    public Menu(List&lt;string&gt; options)
+    {
+        this.options = options;
+        this.selectedIndex = 0;
+    }
+
+    public void Display()
+    {
+        Console.Clear();
+        Console.WriteLine("Use arrow keys to navigate, Enter to select:");
+        Console.WriteLine();
+        
+        for (int i = 0; i &lt; options.Count; i++)
+        {
+            if (i == selectedIndex)
+            {
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.WriteLine($"► {options[i]}");
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.WriteLine($"  {options[i]}");
+            }
+        }
+    }
+
+    public int Run()
+    {
+        ConsoleKey key;
+        do
+        {
+            Display();
+            var keyInfo = Console.ReadKey(true);
+            key = keyInfo.Key;
+
+            if (key == ConsoleKey.UpArrow)
+            {
+                selectedIndex = Math.Max(0, selectedIndex - 1);
+            }
+            else if (key == ConsoleKey.DownArrow)
+            {
+                selectedIndex = Math.Min(options.Count - 1, selectedIndex + 1);
+            }
+        }
+        while (key != ConsoleKey.Enter);
+
+        return selectedIndex;
+    }
+}</code></pre>
+
+                <h3>Creating a Data Table</h3>
+                <p>Display tabular data in a formatted way:</p>
+                <pre><code>public class DataTable
+{
+    public static void Display(string[] headers, string[][] data)
+    {
+        // Calculate column widths
+        int[] columnWidths = new int[headers.Length];
+        for (int i = 0; i &lt; headers.Length; i++)
+        {
+            columnWidths[i] = headers[i].Length;
+            foreach (var row in data)
+            {
+                if (row[i].Length &gt; columnWidths[i])
+                    columnWidths[i] = row[i].Length;
+            }
+        }
+
+        // Print header
+        PrintRow(headers, columnWidths);
+        PrintSeparator(columnWidths);
+
+        // Print data
+        foreach (var row in data)
+        {
+            PrintRow(row, columnWidths);
+        }
+    }
+
+    private static void PrintRow(string[] row, int[] widths)
+    {
+        for (int i = 0; i &lt; row.Length; i++)
+        {
+            Console.Write("| " + row[i].PadRight(widths[i]) + " ");
+        }
+        Console.WriteLine("|");
+    }
+
+    private static void PrintSeparator(int[] widths)
+    {
+        foreach (var width in widths)
+        {
+            Console.Write("+-" + new string('-', width) + "-");
+        }
+        Console.WriteLine("+");
+    }
+}</code></pre>
+
+                <h3>Creating a Progress Bar</h3>
+                <p>Visual feedback for long-running operations:</p>
+                <pre><code>public class ProgressBar
+{
+    public static void Show(int current, int total, string message = "")
+    {
+        int barWidth = 40;
+        float percentage = (float)current / total;
+        int filled = (int)(barWidth * percentage);
+
+        Console.Write($"\r{message} [");
+        Console.Write(new string('█', filled));
+        Console.Write(new string('░', barWidth - filled));
+        Console.Write($"] {percentage:P0}");
+    }
+}</code></pre>
+
+                <h3>Putting It All Together</h3>
+                <p>Here's an example of using these components:</p>
+                <pre><code>var menu = new Menu(new List&lt;string&gt; 
+{
+    "View Data",
+    "Show Progress",
+    "Exit"
+});
+
+int choice = menu.Run();
+
+if (choice == 0)
+{
+    var headers = new[] { "ID", "Name", "Status" };
+    var data = new[]
+    {
+        new[] { "1", "Task 1", "Complete" },
+        new[] { "2", "Task 2", "In Progress" },
+        new[] { "3", "Task 3", "Pending" }
+    };
+    DataTable.Display(headers, data);
+}</code></pre>
+
+                <h3>What's Next?</h3>
+                <p>Now that you understand basic components, you're ready to explore advanced features and customization options.</p>
+
+                <div style="margin-top: 2rem;">
+                    <a href="getting-started.html" class="btn">← Previous: Getting Started</a>
+                    <a href="advanced-features.html" class="btn" style="margin-left: 1rem;">Next: Advanced Features →</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 C# Console Dashboard Tutorial Series</p>
+        </div>
+    </footer>
+</body>
+</html>

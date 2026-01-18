@@ -1,0 +1,12 @@
+# GitHub Pages configuration
+# This repository hosts HTML tutorial pages for C# Console Dashboard
+
+# Theme configuration (optional, can be removed for pure HTML hosting)
+theme: jekyll-theme-minimal
+
+# Site settings
+title: C# Console Dashboard Tutorials
+description: Interactive tutorial series for building C# Console Dashboard applications
+
+# Build settings
+markdown: kramdown
