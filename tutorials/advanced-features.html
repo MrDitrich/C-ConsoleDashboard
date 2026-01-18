@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Features - C# Console Dashboard</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Advanced Features</h1>
+            <p class="subtitle">C# Console Dashboard Tutorial</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section>
+            <a href="../index.html" class="back-link">← Back to Tutorials</a>
+            
+            <div class="tutorial-content">
+                <h2>Advanced Dashboard Features</h2>
+                <p>Take your console dashboard to the next level with advanced features including real-time updates, custom themes, and data visualization.</p>
+
+                <h3>Real-Time Dashboard Updates</h3>
+                <p>Create a dashboard that updates automatically without flickering:</p>
+                <pre><code>public class LiveDashboard
+{
+    private bool isRunning = true;
+    private System.Threading.Timer timer;
+
+    public void Start()
+    {
+        Console.CursorVisible = false;
+        timer = new System.Threading.Timer(Update, null, 0, 1000);
+
+        Console.WriteLine("Press Q to quit...");
+        while (isRunning)
+        {
+            if (Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Q)
+            {
+                isRunning = false;
+            }
+        }
+
+        timer.Dispose();
+        Console.CursorVisible = true;
+    }
+
+    private void Update(object state)
+    {
+        if (!isRunning) return;
+
+        int left = Console.CursorLeft;
+        int top = Console.CursorTop;
+
+        Console.SetCursorPosition(0, 0);
+        Console.WriteLine($"Current Time: {DateTime.Now:HH:mm:ss}");
+        Console.WriteLine($"Memory Usage: {GC.GetTotalMemory(false) / 1024 / 1024} MB");
+        Console.WriteLine($"CPU Time: {Environment.TickCount / 1000}s");
+
+        Console.SetCursorPosition(left, top);
+    }
+}</code></pre>
+
+                <h3>Custom Theme System</h3>
+                <p>Implement a theme system for your dashboard:</p>
+                <pre><code>public class Theme
+{
+    public ConsoleColor PrimaryColor { get; set; }
+    public ConsoleColor SecondaryColor { get; set; }
+    public ConsoleColor AccentColor { get; set; }
+    public ConsoleColor BackgroundColor { get; set; }
+
+    public static Theme Dark = new Theme
+    {
+        PrimaryColor = ConsoleColor.White,
+        SecondaryColor = ConsoleColor.Gray,
+        AccentColor = ConsoleColor.Cyan,
+        BackgroundColor = ConsoleColor.Black
+    };
+
+    public static Theme Light = new Theme
+    {
+        PrimaryColor = ConsoleColor.Black,
+        SecondaryColor = ConsoleColor.DarkGray,
+        AccentColor = ConsoleColor.Blue,
+        BackgroundColor = ConsoleColor.White
+    };
+
+    public void Apply()
+    {
+        Console.BackgroundColor = BackgroundColor;
+        Console.ForegroundColor = PrimaryColor;
+        Console.Clear();
+    }
+}</code></pre>
+
+                <h3>Data Visualization with Charts</h3>
+                <p>Create ASCII-based charts for data visualization:</p>
+                <pre><code>public class BarChart
+{
+    public static void Display(Dictionary&lt;string, int&gt; data, int maxWidth = 50)
+    {
+        int maxValue = data.Values.Max();
+
+        foreach (var item in data)
+        {
+            int barLength = (int)((double)item.Value / maxValue * maxWidth);
+            Console.Write($"{item.Key.PadRight(15)} ");
+            
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write(new string('█', barLength));
+            Console.ResetColor();
+            
+            Console.WriteLine($" {item.Value}");
+        }
+    }
+}
+
+// Usage example
+var salesData = new Dictionary&lt;string, int&gt;
+{
+    { "January", 120 },
+    { "February", 150 },
+    { "March", 180 },
+    { "April", 140 }
+};
+
+BarChart.Display(salesData);</code></pre>
+
+                <h3>Layout Management</h3>
+                <p>Create a flexible layout system for complex dashboards:</p>
+                <pre><code>public class Panel
+{
+    public int Left { get; set; }
+    public int Top { get; set; }
+    public int Width { get; set; }
+    public int Height { get; set; }
+    public string Title { get; set; }
+
+    public void Draw()
+    {
+        // Draw border
+        Console.SetCursorPosition(Left, Top);
+        Console.Write("╔" + new string('═', Width - 2) + "╗");
+
+        // Draw title
+        if (!string.IsNullOrEmpty(Title))
+        {
+            int titlePos = Left + (Width - Title.Length) / 2;
+            Console.SetCursorPosition(titlePos, Top);
+            Console.Write($" {Title} ");
+        }
+
+        // Draw sides
+        for (int i = 1; i &lt; Height - 1; i++)
+        {
+            Console.SetCursorPosition(Left, Top + i);
+            Console.Write("║" + new string(' ', Width - 2) + "║");
+        }
+
+        // Draw bottom
+        Console.SetCursorPosition(Left, Top + Height - 1);
+        Console.Write("╚" + new string('═', Width - 2) + "╝");
+    }
+
+    public void DrawContent(Action&lt;int, int&gt; contentRenderer)
+    {
+        Draw();
+        contentRenderer(Left + 2, Top + 1);
+    }
+}</code></pre>
+
+                <h3>Error Handling and Logging</h3>
+                <p>Implement robust error handling:</p>
+                <pre><code>public class Logger
+{
+    private static string logFile = "dashboard.log";
+
+    public static void Log(string message, string level = "INFO")
+    {
+        string logEntry = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] [{level}] {message}";
+        File.AppendAllText(logFile, logEntry + Environment.NewLine);
+
+        if (level == "ERROR")
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"⚠ {message}");
+            Console.ResetColor();
+        }
+    }
+
+    public static void Error(Exception ex)
+    {
+        Log($"{ex.Message}\n{ex.StackTrace}", "ERROR");
+    }
+}</code></pre>
+
+                <h3>Complete Example</h3>
+                <p>Here's a complete advanced dashboard example:</p>
+                <pre><code>class AdvancedDashboard
+{
+    static void Main(string[] args)
+    {
+        try
+        {
+            Theme.Dark.Apply();
+
+            var leftPanel = new Panel
+            {
+                Left = 0,
+                Top = 0,
+                Width = 40,
+                Height = 20,
+                Title = "Sales Data"
+            };
+
+            var rightPanel = new Panel
+            {
+                Left = 41,
+                Top = 0,
+                Width = 39,
+                Height = 20,
+                Title = "Statistics"
+            };
+
+            leftPanel.DrawContent((x, y) =>
+            {
+                Console.SetCursorPosition(x, y);
+                var data = new Dictionary&lt;string, int&gt;
+                {
+                    { "Q1", 120 },
+                    { "Q2", 150 },
+                    { "Q3", 180 },
+                    { "Q4", 200 }
+                };
+                BarChart.Display(data, 25);
+            });
+
+            rightPanel.DrawContent((x, y) =>
+            {
+                Console.SetCursorPosition(x, y);
+                Console.WriteLine("Total Revenue: $650K");
+                Console.SetCursorPosition(x, y + 1);
+                Console.WriteLine("Growth Rate: +15%");
+                Console.SetCursorPosition(x, y + 2);
+                Console.WriteLine("Active Users: 1,234");
+            });
+
+            Console.ReadKey();
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex);
+        }
+    }
+}</code></pre>
+
+                <h3>Best Practices</h3>
+                <ul>
+                    <li>Always handle console resize events gracefully</li>
+                    <li>Use double buffering techniques to prevent flickering</li>
+                    <li>Implement proper cleanup for timers and resources</li>
+                    <li>Test on different terminal sizes and operating systems</li>
+                    <li>Keep console output thread-safe in multi-threaded scenarios</li>
+                </ul>
+
+                <h3>Conclusion</h3>
+                <p>You've now learned the advanced features for building professional console dashboards. Experiment with these techniques and create your own unique dashboard applications!</p>
+
+                <div style="margin-top: 2rem;">
+                    <a href="basic-components.html" class="btn">← Previous: Basic Components</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 C# Console Dashboard Tutorial Series</p>
+        </div>
+    </footer>
+</body>
+</html>
